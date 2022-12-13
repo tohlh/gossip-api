@@ -82,5 +82,4 @@ test:
 production:
   <<: *default
   database: gossip_api_production
-  username: gossip_api
-  password: <%= ENV["GOSSIP_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
