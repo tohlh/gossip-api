@@ -11,7 +11,7 @@ services:
     region: singapore
     plan: free
     env: ruby
-    buildCommand: "bundle install; bundle exec rake assets:precompile; bundle exec rake assets:clean;"
+    buildCommand: "bundle install;"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
