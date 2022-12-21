@@ -3,7 +3,7 @@ class AuthenticationController < ApplicationController
   def login
     user = User.find_by('username': params[:username])
     if user&.authenticate(params[:password])
-		  # user is authenticated and token is generated
+      # user is authenticated and token is generated
       token = jwt_encode('user_id': user.id)
       render json: { token: token }, status: :ok
     else
@@ -24,10 +24,6 @@ class AuthenticationController < ApplicationController
   end
 
 	private
-
-  def login_params
-    params.permit(:username, :password)
-  end
 
   def signup_params
     params.permit(:name, :username, :password, :password_confirmation)
