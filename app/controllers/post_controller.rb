@@ -9,7 +9,7 @@ class PostController < ApplicationController
       user: @current_user
     )
     if !post.save
-      render json: { errors: post.errors.full_messages }, status: :bad_request
+      render json: { errors: post.errors.full_messages }, status: :bad_request and return
     end
 
     for t in params[:tags] do
@@ -20,16 +20,16 @@ class PostController < ApplicationController
         tag = Tag.find_by(title: t.downcase)
       elsif !tag.save
         # step 2.2, if not, save it
-        render json: { errors: tag.errors.full_messages }, status: :bad_request
+        render json: { errors: tag.errors.full_messages }, status: :bad_request and return
       end
       
       # step 3, save as many-to-many relation with TagAssignment
       tag_assignment = TagAssignment.new(post: post, tag: tag)
       if !tag_assignment.save
-        render json: { errors: tag.errors.full_messages }, status: :bad_request
+        render json: { errors: tag.errors.full_messages }, status: :bad_request and return
       end
     end
 
-    render json: { message: 'Post created successfully'}, status: :created
+    render json: { message: 'Post created successfully'}, status: :created and return
   end
 end
