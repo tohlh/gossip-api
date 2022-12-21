@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  SECRET_KEY = Rails.application.secrets.secret_key_base
+  SECRET_KEY = ENV["SECRET_KEY_BASE"]
 
   def jwt_encode(payload)
     payload[:exp] = 24.hours.from_now.to_i		# token expires in 24h
