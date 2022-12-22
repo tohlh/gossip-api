@@ -30,6 +30,18 @@ class PostController < ApplicationController
       end
     end
 
-    render json: { message: 'Post created successfully'}, status: :created and return
+    render json: { message: 'Post created successfully' }, status: :created and return
+  end
+
+  def delete_post
+    post = Post.find_by(id: params[:id])
+    if post && post.user == @current_user
+      post.destroy
+      render json: { message: 'Post deleted successfully' }, status: :accepted and return
+    elsif post && post.user != @current_user
+      render json: { message: 'Unauthorized to delete post' }, status: :unauthorized and return
+    else
+      render json: { errors: 'Post does not exist' }, status: :bad_request and return
+    end
   end
 end

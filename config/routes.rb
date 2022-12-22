@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   
   # post APIs
   post 'post', to: 'post#create_post'
+  delete 'post', to: 'post#delete_post'
 end
