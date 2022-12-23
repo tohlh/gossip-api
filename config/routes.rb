@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'posts', to: 'post#get_posts'
   get 'post', to: 'post#get_post'
   post 'post', to: 'post#create_post'
+  patch 'post', to: 'post#update_post'
   delete 'post', to: 'post#delete_post'
 
   # comments APIs

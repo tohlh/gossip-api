@@ -60,17 +60,31 @@ class PostController < ApplicationController
     render json: { message: 'Post created successfully' }, status: :created and return
   end
 
+  def update_post
+    post = Post.find_by(id: params[:id])
+    if !params[:id]
+      render json: { message: 'id is required' }, status: :bad_request
+    elsif post && post.user == @current_user
+      post.update(title: params[:title], content: params[:content])
+      render json: { message: 'Post updated successfully' }, status: :accepted
+    elsif post && post.user != @current_user
+      render json: { message: 'Unauthorized to update post' }, status: :unauthorized
+    else
+      render json: { errors: 'Post does not exist' }, status: :bad_request
+    end
+  end
+
   def delete_post
     post = Post.find_by(id: params[:id])
     if !params[:id]
-      render json: { message: 'id is required' }, status: :bad_request and return
+      render json: { message: 'id is required' }, status: :bad_request
     elsif post && post.user == @current_user
       post.destroy
-      render json: { message: 'Post deleted successfully' }, status: :accepted and return
+      render json: { message: 'Post deleted successfully' }, status: :accepted
     elsif post && post.user != @current_user
-      render json: { message: 'Unauthorized to delete post' }, status: :unauthorized and return
+      render json: { message: 'Unauthorized to delete post' }, status: :unauthorized
     else
-      render json: { errors: 'Post does not exist' }, status: :bad_request and return
+      render json: { errors: 'Post does not exist' }, status: :bad_request
     end
   end
 end
