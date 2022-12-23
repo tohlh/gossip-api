@@ -13,7 +13,7 @@ class CommentController < ApplicationController
     end
 
     post = Post.find_by(id: params[:post_id])
-    comments = Comment.where(post_id: params[:post_id])[start, length]
+    comments = Comment.where(post_id: params[:post_id]).order(created_at: :desc)[start, length]
     render json: comments, each_serializer: CommentSerializer, current_user: @current_user
   end
 
