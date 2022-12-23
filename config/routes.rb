@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   # comments APIs
   get 'comments', to: 'comment#get_comments'
   post 'comment', to: 'comment#create_comment'
+  patch 'comment', to: 'comment#update_comment'
   delete 'comment', to: 'comment#delete_comment'
 end

@@ -28,6 +28,20 @@ class CommentController < ApplicationController
     end
   end
 
+  def update_comment
+    comment = Comment.find_by(id: params[:id])
+    if !params[:id]
+      render json: { message: 'id is required' }, status: :bad_request
+    elsif comment && comment.user == @current_user
+      comment.update(content: params[:content])
+      render json: { message: 'Comment updated successfully' }, status: :accepted
+    elsif comment && comment.user != @current_user
+      render json: { message: 'Unauthorized to update comment' }, status: :unauthorized
+    else
+      render json: { errors: 'Comment does not exist' }, status: :bad_request
+    end
+  end
+
   def delete_comment
     comment = Comment.find_by(id: params[:id])
     if !params[:id]
