@@ -27,4 +27,18 @@ class CommentController < ApplicationController
       render json: { errors: tag.errors.full_messages }, status: :bad_request
     end
   end
+
+  def delete_comment
+    comment = Comment.find_by(id: params[:id])
+    if !params[:id]
+      render json: { message: 'id is required' }, status: :bad_request
+    elsif comment && comment.user == @current_user
+      comment.destroy
+      render json: { message: 'Comment deleted successfully' }, status: :accepted
+    elsif comment && comment.user != @current_user
+      render json: { message: 'Unauthorized to delete comment' }, status: :unauthorized
+    else
+      render json: { errors: 'Comment does not exist' }, status: :bad_request
+    end
+  end
 end
