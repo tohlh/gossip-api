@@ -13,8 +13,8 @@ class PostController < ApplicationController
       render json: { errors: "start and length cannot be negative numbers" }, status: :bad_request and return
     end
 
-    posts = Post.all[start, length]
-    render json: posts, each_serializer: PostsSerializer, root: posts, current_user: @current_user
+    posts = Post.all.order(created_at: :desc)[start, length]
+    render json: posts, each_serializer: PostSerializer, current_user: @current_user
   end
 
   def get_post
