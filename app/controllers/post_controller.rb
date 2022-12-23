@@ -57,7 +57,7 @@ class PostController < ApplicationController
       end
     end
 
-    render json: { message: 'Post created successfully' }, status: :created and return
+    render json: { message: 'Post created successfully' }, status: :created
   end
 
   def update_post
