@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   delete 'post', to: 'post#delete_post'
 
   # comments APIs
+  get 'comments', to: 'comment#get_comments'
   post 'comment', to: 'comment#create_comment'
 end
