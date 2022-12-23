@@ -14,6 +14,16 @@ class PostController < ApplicationController
     end
 
     posts = Post.all.order(created_at: :desc)[start, length]
+    tag = Tag.find_by(title: params[:tag])
+    
+    if params[:tag]
+      tag_assignments = TagAssignment
+                          .where(tag: tag)
+                          .joins(:post)
+                          .order('posts.created_at DESC')
+      posts = tag_assignments.map{ |t| t.post }
+    end
+
     render json: posts, each_serializer: PostSerializer, current_user: @current_user
   end
 
