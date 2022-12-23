@@ -17,6 +17,17 @@ class PostController < ApplicationController
     render json: posts, each_serializer: PostsSerializer, root: posts, current_user: @current_user
   end
 
+  def get_post
+    post = Post.find_by(id: params[:id])
+    if !params[:id]
+      render json: { errors: 'id is required' }, status: :bad_request
+    elsif post
+      render json: post, serializer: PostSerializer, current_user: @current_user
+    else
+      render json: { errors: 'Post does not exist' }, status: :bad_request
+    end
+  end
+
   def create_post
     # step 1, save the post first
     post = Post.new(
@@ -51,7 +62,9 @@ class PostController < ApplicationController
 
   def delete_post
     post = Post.find_by(id: params[:id])
-    if post && post.user == @current_user
+    if !params[:id]
+      render json: { message: 'id is required' }, status: :bad_request and return
+    elsif post && post.user == @current_user
       post.destroy
       render json: { message: 'Post deleted successfully' }, status: :accepted and return
     elsif post && post.user != @current_user
