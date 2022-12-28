@@ -22,3 +22,4 @@ services:
         sync: false
       - key: SECRET_KEY_BASE
         sync: false
+    autoDeploy: false
