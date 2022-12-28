@@ -1,6 +1,18 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # authentication APIs
+  post 'auth/login', to: 'authentication#login'
+  post 'auth/signup', to: 'authentication#signup'
+  
+  # post APIs
+  get 'posts', to: 'post#get_posts'
+  get 'post', to: 'post#get_post'
+  post 'post', to: 'post#create_post'
+  patch 'post', to: 'post#update_post'
+  delete 'post', to: 'post#delete_post'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # comments APIs
+  get 'comments', to: 'comment#get_comments'
+  post 'comment', to: 'comment#create_comment'
+  patch 'comment', to: 'comment#update_comment'
+  delete 'comment', to: 'comment#delete_comment'
 end
