@@ -25,6 +25,11 @@ class AuthenticationController < ApplicationController
 
 	private
 
+  def jwt_encode(payload)
+    payload[:exp] = 24.hours.from_now.to_i		# token expires in 24h
+    JWT.encode(payload, SECRET_KEY, 'HS256')	# encode payload into token
+  end
+
   def signup_params
     params.permit(:name, :username, :password, :password_confirmation)
   end
