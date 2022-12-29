@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   # authentication APIs
   post 'auth/login', to: 'authentication#login'
   post 'auth/signup', to: 'authentication#signup'
+
+  # user
+  get 'user', to: 'user#get_user'
   
   # post APIs
   get 'posts', to: 'post#get_posts'
