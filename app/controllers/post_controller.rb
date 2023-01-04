@@ -53,7 +53,9 @@ class PostController < ApplicationController
       render json: { errors: post.errors.full_messages }, status: :bad_request and return
     end
 
-    for t in params[:tags] do
+    tags = params[:tags].map! {|tag| tag.downcase}
+    tags = tags.uniq
+    for t in tags do
       # step 2, check if the tag already existed
       tag = Tag.new(title: t.downcase)
       if Tag.exists?(title: t.downcase)
