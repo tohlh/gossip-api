@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   patch 'post', to: 'post#update_post'
   delete 'post', to: 'post#delete_post'
 
+  # tag
+  get 'tags', to: 'tag#get_tags'
+
   # comments APIs
   get 'comments', to: 'comment#get_comments'
   post 'comment', to: 'comment#create_comment'

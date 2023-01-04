@@ -39,7 +39,7 @@ class PostController < ApplicationController
   end
 
   def create_post
-    if params[:tags].length > 3
+    if params[:tags].length > 5
       render json: { errors: 'Post should have no more than 3 tags.' }, status: :bad_request and return
     end
 

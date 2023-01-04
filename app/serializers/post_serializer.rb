@@ -1,7 +1,7 @@
 class PostSerializer < ActiveModel::Serializer
   attributes :id, :title, :content, :is_edited, :is_op, :created_at
   belongs_to :user, serializer: UserSerializer
-  has_many :tags, serializer: TagsSerializer
+  has_many :tags, serializer: TagSerializer
 
   def is_edited
     object.created_at != object.updated_at
