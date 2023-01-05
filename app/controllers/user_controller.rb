@@ -35,7 +35,7 @@ class UserController < ApplicationController
 
     username = params[:username]
     user = User.find_by(username: username)
-    posts = Post.where(user: user)[start, length]
+    posts = Post.where(user: user).order(created_at: :desc)[start, length]
     render json: posts, each_serializer: PostSerializer
   end
 
