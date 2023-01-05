@@ -1,5 +1,5 @@
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :content, :is_edited, :is_op
+  attributes :id, :content, :is_edited, :is_op, :created_at
   belongs_to :user, serializer: UserSerializer
 
   def is_edited
