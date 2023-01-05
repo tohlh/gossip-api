@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   post 'auth/signup', to: 'authentication#signup'
 
   # user
-  get 'user', to: 'user#get_user'
+  get 'user/current', to: 'user#get_current_user'
+  get 'user', to: 'user#get_user_profile'
+  get 'user/posts', to: 'user#get_user_posts'
   
   # post APIs
   get 'posts', to: 'post#get_posts'
