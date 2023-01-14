@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   # account APIs
   patch 'account/update', to: 'account#update_account'
+  delete 'account/delete', to: 'account#delete_account'
 
   # user
   get 'user/current', to: 'user#get_current_user'

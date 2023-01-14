@@ -15,6 +15,22 @@ class AccountController < ApplicationController
     end
   end
 
+  def delete_account
+    user = @current_user
+    if user&.authenticate(params[:password])
+      if user.destroy()
+        render json: { message: 'Account deleted successfully'}, status: :ok
+      else
+        render json: { error: user.errors.full_messages }, status: :bad_request
+      end
+    else
+      # unable to authenticate user
+      render json: { error: 'Invalid password' }, status: :unauthorized
+    end
+  end
+
+  private
+
   def account_params
     params.permit(:name, :username, :password, :password_confirmation)
   end
