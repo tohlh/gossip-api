@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'authentication#login'
   post 'auth/signup', to: 'authentication#signup'
 
+  # account APIs
+  patch 'account/update', to: 'account#update_account'
+
   # user
   get 'user/current', to: 'user#get_current_user'
   get 'user', to: 'user#get_user_profile'
