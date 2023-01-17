@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   post 'auth/signup', to: 'authentication#signup'
 
   # account APIs
-  patch 'account/update', to: 'account#update_account'
+  patch 'account/update/details', to: 'account#update_details'
+  patch 'account/update/password', to: 'account#update_password'
   delete 'account/delete', to: 'account#delete_account'
 
   # user
