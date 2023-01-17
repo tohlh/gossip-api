@@ -2,7 +2,8 @@ class AccountController < ApplicationController
   before_action :authorize
 
   def update_details
-    if User.exists?(username: params[:username])
+    find_user = User.find_by(username: params[:username])
+    if find_user && find_user != @current_user
       render json: { error: 'username is already taken' }, status: :bad_request and return
     end
     user = @current_user
