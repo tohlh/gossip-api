@@ -2,12 +2,9 @@ class AccountController < ApplicationController
   before_action :authorize
 
   def update_details
-    find_user = User.find_by(username: params[:username])
-    if find_user && find_user != @current_user
-      render json: { error: 'username is already taken' }, status: :bad_request and return
-    end
     user = @current_user
-    if user.update_columns(name: params[:name], username: params[:username])
+    user.skip_validations = true
+    if user.update(name: params[:name], username: params[:username])
       render json: { message: 'Account updated successfully' }, status: :ok
     else
       render json: { error: user.errors.full_messages }, status: :bad_request
@@ -17,12 +14,8 @@ class AccountController < ApplicationController
   def update_password
     user = @current_user
     if user&.authenticate(params[:current_password])
-      if user.update(name: user.name,
-                     username: user.username,
-                     password: params[:password],
-                     password_confirmation:
-                     params[:password_confirmation]
-                    )
+      if user.update(password: params[:password],
+                     password_confirmation: params[:password_confirmation])
         render json: { message: 'Password updated successfully' }, status: :ok
       else
         render json: { error: user.errors.full_messages }, status: :bad_request

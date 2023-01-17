@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :skip_validations
   has_secure_password
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -10,7 +11,9 @@ class User < ApplicationRecord
   validates :password,
             presence: true,
             length: { minimum: 8 },
-            if: -> { new_record? || !password.nil? }
+            if: -> { new_record? || !password.nil? },
+            unless: :skip_validations
   validates :password_confirmation,
-            presence: true
+            presence: true,
+            unless: :skip_validations
 end
