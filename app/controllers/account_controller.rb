@@ -3,18 +3,13 @@ class AccountController < ApplicationController
 
   def update_details
     if User.exists?(username: params[:username])
-      render json: { error: "username taken" }, status: :bad_request and return
+      render json: { error: 'username is already taken' }, status: :bad_request and return
     end
     user = @current_user
-    if user&.authenticate(params[:current_password])
-      if user.update_columns(name: params[:name], username: params[:username])
-        render json: { message: 'Account updated successfully' }, status: :ok
-      else
-        render json: { error: user.errors.full_messages }, status: :bad_request
-      end
+    if user.update_columns(name: params[:name], username: params[:username])
+      render json: { message: 'Account updated successfully' }, status: :ok
     else
-      # unable to authenticate user
-      render json: { error: 'Invalid password' }, status: :unauthorized
+      render json: { error: user.errors.full_messages }, status: :bad_request
     end
   end
 
