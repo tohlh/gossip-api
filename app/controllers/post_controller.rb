@@ -12,8 +12,13 @@ class PostController < ApplicationController
     if start < 0 || length < 0
       render json: { errors: "start and length cannot be negative numbers" }, status: :bad_request and return
     end
+    
+    posts = Post.all.order(created_at: :desc)
+    
+    if start >= posts.length
+      render json: [], status: :ok and return
+    end
 
-    posts = Post.all.order(created_at: :desc)[start, length]
     tag = Tag.find_by(title: params[:tag])
     
     if params[:tag]
@@ -24,7 +29,7 @@ class PostController < ApplicationController
       posts = tag_assignments.map{ |t| t.post }
     end
 
-    render json: posts, each_serializer: PostSerializer, current_user: @current_user
+    render json: posts[start, length], each_serializer: PostSerializer, current_user: @current_user
   end
 
   def get_post
