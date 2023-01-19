@@ -32,11 +32,15 @@ class UserController < ApplicationController
     if start < 0 || length < 0
       render json: { errors: "start and length cannot be negative numbers" }, status: :bad_request and return
     end
-
+    
     username = params[:username]
     user = User.find_by(username: username)
-    posts = Post.where(user: user).order(created_at: :desc)[start, length]
-    render json: posts, each_serializer: PostSerializer, current_user: @current_user
+    posts = Post.where(user: user).order(created_at: :desc)
+    if start >= posts.length
+      render json: [], status: :ok and return
+    end
+
+    render json: posts[start, length], each_serializer: PostSerializer, current_user: @current_user
   end
 
 end
