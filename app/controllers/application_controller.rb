@@ -3,9 +3,10 @@ class ApplicationController < ActionController::API
 
   def authorize
     # reads token from request header
-    header = request.headers['Authorization'].split(' ').last
+    header = request.headers['Authorization']
+    token = header ? header.split(' ').last : ''
     begin
-      @decoded_data = jwt_decode(header)
+      @decoded_data = jwt_decode(token)
       @current_user = User.find(@decoded_data[:user_id])
     rescue ActiveRecord::RecordNotFound => e
       # user is not found
