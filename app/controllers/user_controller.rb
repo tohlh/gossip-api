@@ -8,7 +8,7 @@ class UserController < ApplicationController
   def get_user_profile
     username = params[:username]
     
-    if !params[:username]
+    if !username
       render json: { "error": "username is required" }, status: :bad_request and return
     end
 
@@ -17,7 +17,7 @@ class UserController < ApplicationController
     if user
       render json: user, serializer: UserSerializer
     else
-      render json: {"error": "user not found"}, status: :bad_request and return
+      render json: {"error": "user not found"}, status: :not_found and return
     end
   end
 
