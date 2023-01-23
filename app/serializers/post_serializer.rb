@@ -3,6 +3,10 @@ class PostSerializer < ActiveModel::Serializer
   belongs_to :user, serializer: UserSerializer
   has_many :tags, serializer: TagSerializer
 
+  def tags
+    object.tags.order("title")
+  end
+
   def is_edited
     object.created_at != object.updated_at
   end
