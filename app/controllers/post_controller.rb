@@ -39,7 +39,7 @@ class PostController < ApplicationController
     elsif post
       render json: post, serializer: PostSerializer, current_user: @current_user
     else
-      render json: { errors: 'Post does not exist' }, status: :bad_request
+      render json: { errors: 'Post does not exist' }, status: :not_found
     end
   end
 
