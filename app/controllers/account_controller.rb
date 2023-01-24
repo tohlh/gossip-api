@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
   before_action :authorize
 
+  # Update the details of the current_user
   def update_details
     user = @current_user
     user.skip_validations = true
@@ -11,6 +12,7 @@ class AccountController < ApplicationController
     end
   end
 
+  # Update the password of the current_user
   def update_password
     user = @current_user
     if user&.authenticate(params[:current_password])
@@ -26,6 +28,7 @@ class AccountController < ApplicationController
     end
   end
 
+  # Delete the current_user
   def delete_account
     user = @current_user
     if user&.authenticate(params[:password])

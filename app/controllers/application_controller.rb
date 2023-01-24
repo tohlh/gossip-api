@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   SECRET_KEY = ENV["SECRET_KEY_BASE"]
 
+  # Authorize the current user from token
   def authorize
     # reads token from request header
     header = request.headers['Authorization']

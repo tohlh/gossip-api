@@ -1,10 +1,12 @@
 class UserController < ApplicationController
   before_action :authorize
 
+  # Get the current user
   def get_current_user
     render json: @current_user, serializer: UserSerializer
   end
 
+  # Get the user profile of one user (name and username)
   def get_user_profile
     username = params[:username]
     
@@ -21,6 +23,7 @@ class UserController < ApplicationController
     end
   end
 
+  # Get the posts of a given user, pagination is implemented
   def get_user_posts
     # default start is 0
     start = params[:start] ? params[:start].to_i : 0

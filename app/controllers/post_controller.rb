@@ -1,6 +1,7 @@
 class PostController < ApplicationController
   before_action :authorize
 
+  # Get all posts, with or without given tag. Pagination is implemented
   def get_posts
     # default start is 0
     start = params[:start] ? params[:start].to_i : 0
@@ -32,13 +33,16 @@ class PostController < ApplicationController
     render json: posts[start, length], each_serializer: PostSerializer, current_user: @current_user
   end
 
+  # Get post with given id
   def get_post
     post = Post.find_by(id: params[:id])
     if !params[:id]
+      # If id is not present
       render json: { errors: 'id is required' }, status: :bad_request
     elsif post
       render json: post, serializer: PostSerializer, current_user: @current_user
     else
+      # If post is not present
       render json: { errors: 'Post does not exist' }, status: :not_found
     end
   end
@@ -58,8 +62,8 @@ class PostController < ApplicationController
       render json: { errors: post.errors.full_messages }, status: :bad_request and return
     end
 
-    tags = params[:tags].map! {|tag| tag.downcase}
-    tags = tags.uniq
+    tags = params[:tags].map! {|tag| tag.downcase} # turn all tags to lowercase
+    tags = tags.uniq # make sure all elements in tags array is unique
     for t in tags do
       # step 2, check if the tag already existed
       tag = Tag.new(title: t.downcase)
