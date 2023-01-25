@@ -1,26 +1,5 @@
-# TOH LI HENG A0255768L
+# gossip-api
 
-# README
+This is the backend of the Gossip app, made by Toh Li Heng (A0255768L).
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Please check out the frontend repo [here](https://github.com/tohlh/gossip-frontend).
